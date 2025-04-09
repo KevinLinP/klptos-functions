@@ -1,4 +1,4 @@
-import { getTranscript } from "youtube-transcript";
+import { YoutubeTranscript } from 'youtube-transcript';
 
 const headers = {
   "Content-Type": ["text/plain"],
@@ -17,7 +17,9 @@ export async function handle(event, _context, _cb) {
   }
 
   try {
-    const transcript = await getTranscript(event.body);
+    const captions = await YoutubeTranscript.fetchTranscript(event.body);
+    const transcript = captions.map(c => c.text).join(' ');
+
     return {
       body: transcript,
       headers,

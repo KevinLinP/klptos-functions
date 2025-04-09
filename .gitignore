@@ -1,5 +1,4 @@
-*.secrets.*
-*.secret.*
+.DS_Store
 
 deploy/
 

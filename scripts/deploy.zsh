@@ -4,8 +4,6 @@ set -e
 
 ncc build youtube-transcript.js -m --target es2024
 
-mkdir -p deploy
+zip -j deploy/youtube-transcript.zip dist/*
 
-zip deploy/youtube-transcript.zip package.json package-lock.json youtube-transcript.js
-
-scw function deploy name=youtube-transcript namespace-id=2dfd141b-d6fd-4035-8db0-a83e32bba2bd zip-file=deploy/youtube-transcript.zip
+scw function deploy name=youtube-transcript namespace-id=2dfd141b-d6fd-4035-8db0-a83e32bba2bd zip-file=deploy/youtube-transcript.zip runtime=node22
