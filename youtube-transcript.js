@@ -3,10 +3,20 @@ import { decode } from 'html-entities';
 
 const headers = {
   "Content-Type": ["text/plain"],
-  "Access-Control-Allow-Origin": ["*"]
+  "Access-Control-Allow-Origin": ["*"],
+  "Access-Control-Allow-Methods": ["POST", "OPTIONS"],
+  "Access-Control-Allow-Headers": ["Content-Type", "Auth-Token"]
 };
 
 export async function handle(event, _context, _cb) {
+  // CORS preflight
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 204,
+      headers
+    };
+  }
+
   const authToken = event.headers['Auth-Token'];
   if (!authToken || authToken !== process.env.AUTH_TOKEN) {
     return { statusCode: 401 };
