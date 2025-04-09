@@ -1,4 +1,5 @@
 import { YoutubeTranscript } from 'youtube-transcript';
+import { decode } from 'html-entities';
 
 const headers = {
   "Content-Type": ["text/plain"],
@@ -11,14 +12,12 @@ export async function handle(event, _context, _cb) {
     return { statusCode: 401 };
   }
 
-  // Validate input
-  if (!event.body || !event.body.includes('youtube.com/watch?v=')) {
+  if (!event.body) {
     return { statusCode: 400 };
   }
 
   try {
-    const captions = await YoutubeTranscript.fetchTranscript(event.body);
-    const transcript = captions.map(c => c.text).join(' ');
+    const transcript = await getTranscript(event.body);
 
     return {
       body: transcript,
@@ -32,4 +31,14 @@ export async function handle(event, _context, _cb) {
       statusCode: 500,
     };
   }
+}
+
+export async function getTranscript(videoUrlOrId) {
+  const captions = await YoutubeTranscript.fetchTranscript(videoUrlOrId);
+
+  const encodedTranscript = captions.map(c => c.text).join(' ');
+  const onceDecodedTranscript = decode(encodedTranscript);
+  const twiceDecodedTranscript = decode(onceDecodedTranscript);
+
+  return twiceDecodedTranscript;
 }
