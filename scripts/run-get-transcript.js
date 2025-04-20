@@ -1,7 +1,6 @@
 import { getTranscript } from '../youtube-transcript.js';
 
-// Example YouTube video URL or ID
-const videoUrl = 'https://www.youtube.com/watch?v=7-rqUHaZO6Y';
+const videoUrl = process.argv[2];
 
 async function main() {
   try {

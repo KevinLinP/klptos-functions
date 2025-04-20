@@ -1,0 +1,3 @@
+[submodule "youtube-transcript"]
+	path = youtube-transcript
+	url = https://github.com/KevinLinP/youtube-transcript

@@ -1,4 +1,4 @@
-import { YoutubeTranscript } from 'youtube-transcript';
+import { YoutubeTranscript } from './youtube-transcript/src/index.ts';
 import { decode } from 'html-entities';
 
 const headers = {
@@ -44,7 +44,10 @@ export async function handle(event, _context, _cb) {
 }
 
 export async function getTranscript(videoUrlOrId) {
-  const captions = await YoutubeTranscript.fetchTranscript(videoUrlOrId);
+  const captions = await YoutubeTranscript.fetchTranscript(
+    videoUrlOrId,
+    {languages: ['en-US', 'en']}
+  );
 
   const encodedTranscript = captions.map(c => c.text).join(' ');
   const onceDecodedTranscript = decode(encodedTranscript);

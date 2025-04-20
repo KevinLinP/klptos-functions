@@ -7,7 +7,9 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "html-entities": "^2.6.0",
-    "youtube-transcript": "^1.2.1"
+    "html-entities": "^2.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
   }
 }
